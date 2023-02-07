@@ -2,12 +2,13 @@ import pygame
 import random
 from PIL import Image
 import os
+import sys      # Warning! Just a failsafe! Don't touch! EVER! 
 pygame.init
 pygame.font.init()
 display_width = 1600
 display_height = 900
 gameDisplay = pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption('Pygame Test')
+pygame.display.set_caption('Forgószelek by:ForstyWolfDEV')
 clock = pygame.time.Clock()
 black = (0,0,0)
 white = (255,255,255)
@@ -15,6 +16,38 @@ red = (255,0,0)
 blue=(0,0,255)
 green=(0,255,0)
 Bground=pygame.image.load("bg4.png")
+
+def loadfromlong():   #Read from long term memory
+    longstorage=open("save_long.txt","r")
+    end=0
+    colorinfo=""
+    cords=""
+    while end!=1:
+        temp=longstorage.readline()
+        if "<end>" not in temp:
+            templist=list(temp)
+            atdivide=False
+            counter=0
+            while not atdivide:
+                if templist[counter]!="&":
+                    colorinfo=colorinfo+templist[counter]
+                    counter+=1
+                    if counter>1000:
+                        sys.exit() #failsafe becouse of infinite loop possibility (Mintha kihúznád az áramot)
+                else:
+                    atdivide=True
+                    counter+=1
+            while templist[counter-1]!="]":
+                cords=cords+templist[counter]
+                counter+=1
+                if counter>1000:
+                        sys.exit() #failsafe becouse of infinite loop possibility (Mintha kihúznád az áramot)
+
+        else:
+            
+            end=1
+            returnready=[colorinfo,cords]
+            return (returnready)
 
 
 def imgplace(image,x,y):
@@ -24,21 +57,22 @@ def pointer(color,thingx,thingy,radius):
 def drawsquare(color,x,y,width,height):
     pygame.draw.rect(gameDisplay,color,[x,y,width,height])
 
-def drawer(places,colors):
+def drawer(places,colors): 
     counter=-1
     for listas in places:
+        
         x=listas[0]
         y=listas[1]
         counter+=1
         pointer(colors[counter],x,y,10)
-def getquestion(usedszam):
+def getquestion(usedszam):  #Question chooser
     kerdesek=open("questions.txt","r", encoding="UTF-8")
     szam=random.randint(1,3)
     counter=0
     end=0
     print(szam)
     
-    while end!=1 and counter<1000:
+    while end!=1 and counter<1000:    
         if szam not in usedszam:
             for i in range(szam):
                 vegso=kerdesek.readline()
@@ -52,16 +86,9 @@ def getquestion(usedszam):
     if counter>=1000:
         returnlist=["Out of questions error!",usedszam]
         return(returnlist)
-    
-    
+        
 
-
-
-
-
-
-
-def game_loop():
+def game_loop(): # Main loop 
     x=400
     y=400
     xchange=0
@@ -77,12 +104,25 @@ def game_loop():
     question=questionreturn[0]
     usedszam=questionreturn[1]
 
-    
+    spread=loadfromlong()
+    colors=spread[0]
+    places=[spread[1]]
+    print(colors)
+    print(places)
+
     while not gameExit:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT:  # Exit + save dots to long term
                 gameExit = True
                 print("Quit with event(quit)!")
+                counter=0
+                save=open("save.txt","w")
+                for i in colors:
+                    
+                    save.write(str(i)+"&"+str(places[counter])+"\n")
+                    counter+=1
+                save.close()
+        
 
             if event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_LEFT:
@@ -93,7 +133,7 @@ def game_loop():
                     ychange=-10
                 if event.key== pygame.K_DOWN:
                     ychange=10
-                if event.key==pygame.K_s:
+                if event.key==pygame.K_s:  # Save dots in local 
                     temp=[x,y]
                     places.append(temp)
                     colors.append(colorset[colorcounter])
@@ -120,7 +160,7 @@ def game_loop():
         textRect = text.get_rect()
         textRect.center = (display_width // 2, display_height-55 )
 
-        imgplace(Bground,0,0)
+        imgplace(Bground,0,0)  # Background
         
         pointer(black,x,y,20)
         drawer(places,colors)
