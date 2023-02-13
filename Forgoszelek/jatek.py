@@ -3,6 +3,7 @@ import random
 from PIL import Image
 import os
 import sys      # Warning! Just a failsafe! Don't touch! EVER! 
+import ast      # Used to convert str to list when reading from save
 pygame.init
 pygame.font.init()
 display_width = 1600
@@ -22,6 +23,10 @@ def loadfromlong():   #Read from long term memory
     end=0
     colorinfo=""
     cords=""
+    cordsbreakdown=""
+    cordsreadylist=[]
+    colorsreadylist=[]
+    colorsdreakdown=""
     while end!=1:
         temp=longstorage.readline()
         if "<end>" not in temp:
@@ -46,7 +51,27 @@ def loadfromlong():   #Read from long term memory
         else:
             
             end=1
-            returnready=[colorinfo,cords]
+            
+            for i in cords:
+                cordsbreakdown=cordsbreakdown+i
+                if i=="]":
+                    cordsok=ast.literal_eval(cordsbreakdown)
+                    cordsreadylist.append(cordsok)
+                    cordsbreakdown=""
+                    cordsok=""
+
+            for i in colorinfo:
+                colorsdreakdown=colorsdreakdown+i
+                if i==")":
+                    colorsok=ast.literal_eval(colorsdreakdown)
+                    colorsreadylist.append(colorsok)
+                    colorsdreakdown=""
+                    colorsok=""
+
+            #colorinfo2= ast.literal_eval(colorinfo)
+            #cords2= ast.literal_eval(cords)
+            returnready=[cordsreadylist,colorsreadylist]
+            print(returnready)
             return (returnready)
 
 
@@ -105,8 +130,10 @@ def game_loop(): # Main loop
     usedszam=questionreturn[1]
 
     spread=loadfromlong()
-    colors=spread[0]
-    places=[spread[1]]
+    colors=spread[1]
+    places=spread[0]
+    
+    
     print(colors)
     print(places)
 
