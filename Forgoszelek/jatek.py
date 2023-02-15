@@ -1,6 +1,7 @@
 import pygame
 import random
 from PIL import Image
+
 import os
 import sys      # Warning! Just a failsafe! Don't touch! EVER! 
 import ast      # Used to convert str to list when reading from save
@@ -52,7 +53,7 @@ def loadfromlong():   #Read from long term memory
             
             end=1
             
-            for i in cords:
+            for i in cords: # Reconstruct cords to make it usable plus puts it into a list
                 cordsbreakdown=cordsbreakdown+i
                 if i=="]":
                     cordsok=ast.literal_eval(cordsbreakdown)
@@ -60,7 +61,7 @@ def loadfromlong():   #Read from long term memory
                     cordsbreakdown=""
                     cordsok=""
 
-            for i in colorinfo:
+            for i in colorinfo: # Reconstruct colors to make it usable plus puts it into a list
                 colorsdreakdown=colorsdreakdown+i
                 if i==")":
                     colorsok=ast.literal_eval(colorsdreakdown)
@@ -68,8 +69,8 @@ def loadfromlong():   #Read from long term memory
                     colorsdreakdown=""
                     colorsok=""
 
-            #colorinfo2= ast.literal_eval(colorinfo)
-            #cords2= ast.literal_eval(cords)
+            #colorinfo2= ast.literal_eval(colorinfo)  # CRASH!!
+            #cords2= ast.literal_eval(cords)          # CRASH!!
             returnready=[cordsreadylist,colorsreadylist]
             print(returnready)
             return (returnready)
@@ -113,7 +114,28 @@ def getquestion(usedszam):  #Question chooser
         return(returnlist)
         
 
-def game_loop(): # Main loop 
+
+def buffercheck(buffer,bufferstate,colors,colorset):      # REALLLLLLY UNDERTESTED! (Should work fine.(Maybe))
+    if bufferstate=="":
+        bufferstate=buffer
+        buffer=""
+    else:
+        try:
+            
+            colors[int(bufferstate)]=colorset[int(buffer)]
+            bufferstate=""
+            buffer=""
+        except:
+            print("Except error caught!")
+            bufferstate=""
+            buffer=""
+
+        
+    returnready=[buffer,bufferstate,colors]
+    return returnready
+
+
+def game_loop(): # Main loop #################################### MAIN GAME FROM DOWN HERE! ################################
     x=400
     y=400
     xchange=0
@@ -128,11 +150,13 @@ def game_loop(): # Main loop
     questionreturn=getquestion(usedszam)
     question=questionreturn[0]
     usedszam=questionreturn[1]
-
+    buffer=""
+    bufferstate=""
     spread=loadfromlong()
     colors=spread[1]
     places=spread[0]
-    
+    turn=0
+    checkok=False
     
     print(colors)
     print(places)
@@ -168,13 +192,44 @@ def game_loop(): # Main loop
                         colorcounter+=1
                     else:
                         colorcounter=0
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_q:
                     questionreturn=getquestion(usedszam)
                     usedszam=questionreturn[1]
                     question=questionreturn[0]
+                    turn+=1
+                if event.key==pygame.K_0:   # ############## Buffer Setup #############
+                    buffer=buffer+"0"
+                if event.key==pygame.K_1:
+                    buffer=buffer+"1"
+                if event.key==pygame.K_2:
+                    buffer=buffer+"2"
+                if event.key==pygame.K_3:
+                    buffer=buffer+"3"
+                if event.key==pygame.K_4:
+                    buffer=buffer+"4"
+                if event.key==pygame.K_5:
+                    buffer=buffer+"5"
+                if event.key==pygame.K_6:
+                    buffer=buffer+"6"
+                if event.key==pygame.K_7:
+                    buffer=buffer+"7"
+                if event.key==pygame.K_8:
+                    buffer=buffer+"8"
+                if event.key==pygame.K_9:
+                    buffer=buffer+"9"
+                if event.key==pygame.K_r:
+                    buffer=""
+                    bufferstate=""
+                if event.key==pygame.K_RETURN:
+                    bufferin=buffercheck(buffer,bufferstate,colors,colorset)
+                    buffer=bufferin[0]
+                    bufferstate=bufferin[1]
+                    colors=bufferin[2]
+                    
+
                     
                     
-            if event.type ==pygame.KEYUP:
+            if event.type ==pygame.KEYUP:   
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     xchange=0
                 if event.key ==pygame.K_UP or event.key== pygame.K_DOWN:
@@ -184,19 +239,41 @@ def game_loop(): # Main loop
         y+=ychange
         
         text = font.render(question, True, red, None)
+        text2= font.render(str(turn)+"/30",True,red,None)
         textRect = text.get_rect()
-        textRect.center = (display_width // 2, display_height-55 )
+        textRect2=text2.get_rect()
+        textRect.center = (display_width // 2, 50 )
+        textRect2.center = (display_width-100 , 50 )
+        
 
+        print(buffer)
+        print(bufferstate)
         imgplace(Bground,0,0)  # Background
         
         pointer(black,x,y,20)
         drawer(places,colors)
-        drawsquare(black,0,display_height-80,display_width,70)
+        drawsquare(black,0,18,display_width,70)
         gameDisplay.blit(text, textRect)
+        gameDisplay.blit(text2,textRect2)
+        #bufferin=buffercheck(buffer,bufferstate)
         
         pygame.display.update()
         clock.tick(60)
+        if checkok:
+            print("Checks out!")
+
 
 game_loop()
 pygame.quit()
+"""
+Pontszámlásó         0
+Körjelző            1/2
+Indőmérő             0
+Color change        1/2
+Expand               0
+Ways                 0
+
+
+
+"""
 quit()
