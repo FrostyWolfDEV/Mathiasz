@@ -18,6 +18,13 @@ red = (255,0,0)
 blue=(0,0,255)
 green=(0,255,0)
 Bground=pygame.image.load("bg4.png")
+class City:
+    def __init__(self,name,place,color) -> None:
+        self.name=name
+        self.place=place
+        self.color=color
+    def getplace(self):
+        return self.place
 
 def loadfromlong():   #Read from long term memory
     longstorage=open("save_long.txt","r")
@@ -120,6 +127,14 @@ def getcorrectanswer(answers):
             goodanswer=i
     return goodanswer
 
+def drawdashline(start,end,color):
+    pygame.draw.lines(gameDisplay,color,True, [start , end] )
+def linebetweencities(citiesDict,startcity,endcity,color):
+    citiplace1=citiesDict.get(startcity)
+    citiplace2=citiesDict.get(endcity)
+    
+    drawdashline(citiplace1.getplace(),citiplace2.getplace(),color)
+
 def buffercheck(buffer,bufferstate,colors,colorset):      # REALLLLLLY UNDERTESTED! (Should work fine.(Maybe))
     if bufferstate=="":
         bufferstate=buffer
@@ -142,6 +157,7 @@ def buffercheck(buffer,bufferstate,colors,colorset):      # REALLLLLLY UNDERTEST
 
 def game_loop(): # Main loop #################################### MAIN GAME FROM DOWN HERE! ################################
     x=400
+    
     y=400
     xchange=0
     ychange=0
@@ -149,7 +165,9 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
     flipflop=True
     places=[]
     colors=[]
-    citynames=[]
+    citiesDict={}
+    index2=0
+    citynames=["Balatonfenyves","Fonyód","Balatonboglár","Balatonszárszó","Zamárdi","Siófok","Balatonvilágos","Balatonalmádi","Balatonfüred", "Tihany","Zánka","Szigliget", "Keszthely","Faszomvile"]
     lastturn=0
     index=0
     teamturn=0
@@ -190,13 +208,13 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
 
             if event.type == pygame.KEYDOWN:
                 if event.key==pygame.K_LEFT:
-                    xchange=-10
+                    xchange=-5
                 if event.key==pygame.K_RIGHT:
-                    xchange=10
+                    xchange=5
                 if event.key==pygame.K_UP:
-                    ychange=-10
+                    ychange=-5
                 if event.key== pygame.K_DOWN:
-                    ychange=10
+                    ychange=5
                 if event.key==pygame.K_s:  # Save dots in local 
                     temp=[x,y]
                     places.append(temp)
@@ -306,7 +324,11 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         answ3Rect.center = (display_width-300, display_height-120)
         answ4Rect.center = (display_width-300, display_height-50)
 
-
+        index2=0
+        for listas in places:
+            citiesDict[citynames[index2]]=City(citynames[index2],listas,colors[index2])
+            index2+=1
+        print(citiesDict)
         
             
             
@@ -320,18 +342,44 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         print(bufferstate)
         imgplace(Bground,0,0)  # Background        If you put anything onto the screen, do it from UNDER here(!!!!) (idiot)
         
-        pointer(black,x,y,20)
+        pointer(black,x,y,5)
+        index=0
         for listas in places:
-        
+            
             cityx=listas[0]
             cityy=listas[1]-30
             
-            cityname=font.render("Test",True,black,None)
+            cityname=font.render(citynames[index],True,black,None)
+            
             cityRect= cityname.get_rect()
             cityRect.center = (cityx,cityy)
-            print(cityx,cityy,cityname,cityRect) 
+            #print(cityx,cityy,cityname,cityRect) 
             gameDisplay.blit(cityname, cityRect)
-        
+            index+=1
+        # Lines Set-Up
+
+        linebetweencities(citiesDict,"Balatonboglár","Fonyód",black)
+        linebetweencities(citiesDict,"Balatonboglár","Balatonszárszó",black)
+        linebetweencities(citiesDict,"Balatonboglár","Zánka",black)
+        linebetweencities(citiesDict,"Fonyód","Balatonfenyves",black)
+        linebetweencities(citiesDict,"Fonyód","Szigliget",black)
+        linebetweencities(citiesDict,"Keszthely","Szigliget",black)
+        linebetweencities(citiesDict,"Keszthely","Balatonfenyves",black)
+        linebetweencities(citiesDict,"Szigliget","Zánka",black)
+        linebetweencities(citiesDict,"Zánka","Tihany",black)
+        linebetweencities(citiesDict,"Zánka","Balatonszárszó",black)
+        linebetweencities(citiesDict,"Tihany","Balatonszárszó",black)
+        linebetweencities(citiesDict,"Zamárdi","Balatonszárszó",black)
+        linebetweencities(citiesDict,"Tihany","Balatonfüred",black)
+        linebetweencities(citiesDict,"Tihany","Zamárdi",black)
+        linebetweencities(citiesDict,"Siófok","Zamárdi",black)
+        linebetweencities(citiesDict,"Balatonfüred","Zamárdi",black)
+        linebetweencities(citiesDict,"Siófok","Balatonvilágos",black)
+        linebetweencities(citiesDict,"Siófok","Balatonalmádi",black)
+        linebetweencities(citiesDict,"Siófok","Balatonfüred",black)
+        linebetweencities(citiesDict,"Balatonvilágos","Balatonalmádi",black)
+        linebetweencities(citiesDict,"Balatonfüred","Balatonalmádi",black)
+
             
         drawer(places,colors)
         drawsquare(black,0,18,display_width,70)
@@ -345,13 +393,15 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
             else:
                 teamturn=0
         pointer(colorset[teamturn],display_width-250,50,5)
+        
         gameDisplay.blit(text, textRect)
         gameDisplay.blit(text2,textRect2)
         gameDisplay.blit(answ1,answ1Rect)
         gameDisplay.blit(answ2,answ2Rect)
         gameDisplay.blit(answ3,answ3Rect)
         gameDisplay.blit(answ4,answ4Rect)
-        #bufferin=buffercheck(buffer,bufferstate)
+
+        
         
         pygame.display.update()
         clock.tick(60)
@@ -362,12 +412,12 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
 game_loop()
 pygame.quit()
 """
-Pontszámlásó(?)      0
+Pontszámlásó(?)      X
 Körjelző            Done
-Indőmérő             0
-Color change        1/2
-Expand               0
-Ways                 0
+Indőmérő(?)          X
+Color change        Done
+Expand               X
+Ways(or borders)                1/2
 Answers             Done
 
 Városok: 
