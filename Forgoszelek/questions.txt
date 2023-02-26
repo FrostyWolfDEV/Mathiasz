@@ -12,4 +12,106 @@ WZamárdi
 RÖrvényes
 WBalatonudvari
 WBalatonfűzfő
+<Q>3Melyik magyar nemesi család kastélya áll Keszthelyen?
+WAndrássy család
+RFestetics család
+WEszterházy család
+<Q>2A Balaton fagyáspontja némileg alacsonyabb, mint 0 Celsius.
+RIgaz
+WHamis
+<Q>3Melyik gyógynövényről híres Tihany?
+WKakukkfű
+WKamilla
+RLevendula
+<Q>4A Balaton neve a szláv blato szóból ered. Mit jelenthet?
+WSekély tó
+WLapos víz
+RHullám
+WMocsár
+<Q>3Mitől alakul ki a cunami?
+WViharok következtében
+RTenger alatti földrengés miatt
+WHirtelen hőmérséklet változás miatt
+<Q>3Mitől alakul ki a tornádó?
+WKörnyezetszennyezés
+RHirtelen hőmérséklet változás
+Wtengeráramlás
+<Q>3Hol a legmélyebb a balaton víze?
+WBadacsonytomaj
+WKeszthely
+RTihanyi-szoros
+<Q>3Mennyi idő alatt cserélődik ki a Balaton vize?
+W1,5 év
+R2,2 év
+W8 év
+<Q>2A kárpátokban hó olvadáskor magasabb lesz a Duna vízszintje?
+WIgaz
+RHamis
+<Q>3Melyik fesztivál nem a Balatonnál kerül megrendezésre?
+RSziget
+WBalaton Sound
+WStrand Fesztivál
+<Q>4A hideg vagy a melegfront kedvez jobban a horgászoknak?
+RA hidegfront
+WA melegfront
+WEnyhe időjárás, enyhe záporokkal
+WA legnagyobb kánikula a legjobb 
+<Q>3A Badacsonyi borvidék emblematikus bora a...?
+WSauvignon Blanc
+RKéknyelű
+WKadarka
+<Q>2Régen volt egy időszakos jégkorszak?
+RIgaz
+WHamis
+<Q>3Melyik vár található a Balaton környékén? 
+RFehérkő vára
+WSiroki vár
+WBory vár
+<Q>3Milyen szőlőfajta a leggyakoribb a badacsonyi borvidéken?
+WKirályleányka
+ROlaszrizling
+WZengő
+<Q>2Létezik egy Balaton nevű település Heves megyében?
+RIgaz
+WHamis
+<Q>3Korábban kik folytattak mezőgazdasági tevékenységet a Balaton környékén? 
+WSpanyolok
+RRómaiak
+WNémetek
+<Q>4Milyen természetes oka lehet az éghajlatváltozásnak? 
+RVulkánkitörés
+WAz oceánok hullámzása
+WNappalok és éjszakák váltakozása
+WHoldfogyatkozás
+<Q>3Hány km/h sebességű volt a legnagyobb tornádó?
+W760 km/h
+R686 km/h
+W524 km/h
+<Q>3Melyik film nem a Balatonnál játszódik?
+RSzerelem első végig 
+WZimmer Feri
+WPogány Madonna
+<Q>3Mi okozza a klímaváltozást?
+RÜvegházhatás
+Wnapfoltok
+WKozmikus sugárzás
+<Q>3Mekkora volt a legnagyobb mért tsunami?
+R63 méter
+W72 méter
+W49 méter
+<Q>4 Melyik országban mérték a valaha volt legmagasabb hűmérsékletet?
+WQatar
+WMexikó
+REgyesült államok
+WJapán
+<Q>3Mi volt a magyarországon mért legmagsabb hűfok? 27
+R41,9 Celsius
+W39,7 Celsius
+W36,8 Celsius
+<Q>4 Hány hektár fát égett el az emberiség évente átlagosan az elmúlt évtizedben?
+W5 millió hektár
+W21 millió hektár
+R13 millió hektár
+W8 millió hektár
+<Q>
 <End>

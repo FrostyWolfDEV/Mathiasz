@@ -122,13 +122,14 @@ def getquestion(usedszam):  #                            ##Question chooser##
     return returnlist
              
 def getcorrectanswer(answers):
-    for i in range(len(answers)-1):
+    for i in range(len(answers)):
+
         if list(answers[i])[0]=="R":
             goodanswer=i
     return goodanswer
 
 def drawdashline(start,end,color):
-    pygame.draw.lines(gameDisplay,color,True, [start , end] )
+    pygame.draw.aalines(gameDisplay,color,True, [start , end] )
 def linebetweencities(citiesDict,startcity,endcity,color):
     citiplace1=citiesDict.get(startcity)
     citiplace2=citiesDict.get(endcity)
@@ -319,10 +320,10 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         answ4Rect=answ4.get_rect()
         textRect.center = (display_width // 2, 50 )
         textRect2.center = (display_width-100 , 50 )
-        answ1Rect.center = (display_width-300, display_height-250)
-        answ2Rect.center = (display_width-300, display_height-180)
-        answ3Rect.center = (display_width-300, display_height-120)
-        answ4Rect.center = (display_width-300, display_height-50)
+        answ1Rect.center = (display_width-250, display_height-250)
+        answ2Rect.center = (display_width-250, display_height-180)
+        answ3Rect.center = (display_width-250, display_height-120)
+        answ4Rect.center = (display_width-250, display_height-50)
 
         index2=0
         for listas in places:
@@ -417,7 +418,7 @@ Körjelző            Done
 Indőmérő(?)          X
 Color change        Done
 Expand               X
-Ways(or borders)                1/2
+Ways(or borders)    1/2
 Answers             Done
 
 Városok: 
