@@ -1,3 +1,15 @@
-Ki a legnagyobb király?
-Miért kell kurva farsang?
-Lorem ipsum  
+<Q>4A Balaton hazánk legnagyobb tava. Hány négyzetkilométer a területe?
+W698
+R592
+W891
+W395
+<Q>4Melyik Balaton-parti városban élnek a legtöbben?
+WKeszthelyen
+RSiófok
+WBalatonalmádi
+WZamárdi
+<Q>3Melyik településen működik szabadstrand?
+RÖrvényes
+WBalatonudvari
+WBalatonfűzfő
+<End>
