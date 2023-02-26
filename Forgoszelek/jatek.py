@@ -155,6 +155,26 @@ def buffercheck(buffer,bufferstate,colors,colorset):      # REALLLLLLY UNDERTEST
     returnready=[buffer,bufferstate,colors]
     return returnready
 
+def getthunderq(tquestioncounter):
+    questions=open("thunderquestions.txt","r",encoding="UTF-8")
+    for i in range(tquestioncounter*2):
+        line=questions.readline()
+    line=questions.readline()
+    question=""
+    answer=""
+    if "<Q>" in line:
+        for i in range(3):
+            line[-1:]
+        question=line
+    line=questions.readline()
+    if "<A>" in line:
+        for i in range(3):
+            line[-1:]
+        answer=line
+        tquestioncounter+=1
+    returnlist=[question,answer,tquestioncounter]
+    return returnlist
+
 
 def game_loop(): # Main loop #################################### MAIN GAME FROM DOWN HERE! ################################
     x=400
@@ -164,6 +184,10 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
     ychange=0
     gameExit=False
     flipflop=True
+    thunderq=False
+    thunderqcounter=0
+    tquestion=""
+    tanswer=""
     places=[]
     colors=[]
     citiesDict={}
@@ -192,6 +216,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
     goodanswer=getcorrectanswer(answers) 
     print(colors)
     print(places)
+    tquestioncounter=0
 
     while not gameExit:
         for event in pygame.event.get():
@@ -267,6 +292,18 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
                     buffer=bufferin[0]
                     bufferstate=bufferin[1]
                     colors=bufferin[2]
+                if event.key==pygame.K_t:
+                    if thunderq==False:
+                        thunderq=True
+                        tquestionin=getthunderq(tquestioncounter)
+                        tquestion=tquestionin[0]
+                        tanswer=tquestionin[1]
+                        tquestioncounter=tquestionin[2]
+                    elif thunderq==True and thunderqcounter==1:
+                        thunderq=False
+                        thunderqcounter=0
+                    elif thunderq==True and thunderqcounter!=1:
+                        thunderqcounter=1
                     
 
                     
@@ -314,6 +351,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         #                  Rect Setup
         textRect = text.get_rect()
         textRect2=text2.get_rect()
+        
         answ1Rect=answ1.get_rect()
         answ2Rect=answ2.get_rect()
         answ3Rect=answ3.get_rect()
@@ -394,13 +432,24 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
             else:
                 teamturn=0
         pointer(colorset[teamturn],display_width-250,50,5)
-        
-        gameDisplay.blit(text, textRect)
         gameDisplay.blit(text2,textRect2)
-        gameDisplay.blit(answ1,answ1Rect)
-        gameDisplay.blit(answ2,answ2Rect)
-        gameDisplay.blit(answ3,answ3Rect)
-        gameDisplay.blit(answ4,answ4Rect)
+        if not thunderq:
+            gameDisplay.blit(text, textRect)
+            
+            gameDisplay.blit(answ1,answ1Rect)
+            gameDisplay.blit(answ2,answ2Rect)
+            gameDisplay.blit(answ3,answ3Rect)
+            gameDisplay.blit(answ4,answ4Rect)
+        else:
+            ttext= font.render(tquestion[3:-1],True,red,None)
+            tanswerx= font.render(tanswer[3:-1],True,red,None)
+            ttextRect=ttext.get_rect()
+            tanswerRect=tanswerx.get_rect()
+            ttextRect.center = (display_width // 2, 50 )
+            tanswerRect.center= (display_width-250, display_height-150)
+            gameDisplay.blit(ttext,ttextRect)
+            if thunderq and thunderqcounter==1:
+                gameDisplay.blit(tanswerx,tanswerRect)
 
         
         

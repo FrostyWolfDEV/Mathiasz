@@ -1,0 +1,30 @@
+<Q>Hány millió hektár fát égett el az emberiség évente átlagosan az elmúlt évtizedben?
+<A>13 millió
+<Q>Mi volt a magyarországon mért legmagsabb hűfok?
+<A>41,9 Celsius
+<Q>Évente átlagosan hány millió hektár fát ültetnek?
+<A>4,2 millió 
+<Q> Hány millió tonna szenet használnak el évente energiatermelésre?
+<A>6,081 millió
+<Q>Melyik évben nyilvánították a Kínai folyamidelfint kihaltá?
+<A>2006
+<Q>Mikor volt az utolsó ENSZ Éghajlat-változási Konferencia?
+<A>2021 November 12
+<Q>Hány milliárd tonna jég olvadt el az északi és déli sarkon 1992 és 2017 között?
+<A>2720 milliárd tonna
+<Q>Hány négyzetkilóméter az ózon lyuk átmérője?
+<A>26 millió négyzetkilóméter
+<Q>Mennyi pénzt költ az Eggyesült Államok a környezetvédelemre évete dollárban számolva?
+<A>71,2 milliárd dollárt
+<Q>Melyik évben volt a balaton vízállása a legalacsonyabb az elmúlt 23 évben?
+<A>2003
+<Q>Mennyi volt a legalacsonyabb balatoni átlag vízszint az elmúlt 23 évben?
+<A>33 cm
+<Q>Hány méter mély a Balaton legmélyebb pontja?
+<A>12 méter
+<Q>Hány halfaj él a balatonban?
+<A>33
+<Q>Hány település van közvetlenül a balaton partján?
+<A>41
+<Q>Hány halálos áldozata volt a 1924. június 13.-ai Váci tornádónak?
+<A>9

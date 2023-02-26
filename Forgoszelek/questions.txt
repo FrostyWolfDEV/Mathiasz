@@ -99,19 +99,32 @@ WKozmikus sugárzás
 R63 méter
 W72 méter
 W49 méter
-<Q>4 Melyik országban mérték a valaha volt legmagasabb hűmérsékletet?
+<Q>4Melyik országban mérték a valaha volt legmagasabb hűmérsékletet? 27
 WQatar
 WMexikó
 REgyesült államok
 WJapán
-<Q>3Mi volt a magyarországon mért legmagsabb hűfok? 27
-R41,9 Celsius
-W39,7 Celsius
-W36,8 Celsius
-<Q>4 Hány hektár fát égett el az emberiség évente átlagosan az elmúlt évtizedben?
-W5 millió hektár
-W21 millió hektár
-R13 millió hektár
-W8 millió hektár
-<Q>
+<Q>3Melyik évben történet a Csernobili atomerőmő robbanása?
+R1986
+W1987
+W1988
+<Q>4Hanyas erősségő volt a legerősebb valaha mért földrengés a Richter skálán?
+W7.8
+R9.5
+W8.9
+W10
+<Q>3A világ energia allátásának hány százalékáért felelős a nukleáris energia?
+R10.3%
+W13.8%
+W3.6%
+W28.9%
+<Q>4Melyik ország szennyezi a legjobban a levegőt?
+RKína
+WKórea
+WEgyesült államok
+WIndia
+<Q>3Az alábbi országok közül melyiknek van negatív karbon lábnyoma?
+RNorgégia
+WIzrael
+WEgyiptom
 <End>
