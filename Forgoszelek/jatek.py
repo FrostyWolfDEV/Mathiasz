@@ -372,10 +372,10 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         answ4Rect=answ4.get_rect()
         textRect.center = (display_width // 2, 50 )
         textRect2.center = (display_width-100 , 50 )
-        answ1Rect.center = (display_width-250, display_height-250)
-        answ2Rect.center = (display_width-250, display_height-180)
-        answ3Rect.center = (display_width-250, display_height-120)
-        answ4Rect.center = (display_width-250, display_height-50)
+        answ1Rect.center = (display_width//2+240 , display_height-250)
+        answ2Rect.center = (display_width//2+240, display_height-180)
+        answ3Rect.center = (display_width//2+240, display_height-120)
+        answ4Rect.center = (display_width//2+240, display_height-50)
 
         index2=0
         for listas in places:
@@ -395,7 +395,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         #print(bufferstate)
         imgplace(Bground,0,0)  # Background        If you put anything onto the screen, do it from UNDER here(!!!!) (idiot)
         
-        pointer(black,x,y,5)
+        #pointer(black,x,y,5)
         index=0
         for listas in places:
             
@@ -436,7 +436,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
             
         drawer(places,colors)
         drawsquare(black,0,18,display_width,70)
-        drawsquare(black,display_width-500,display_height-300,500,300)
+        drawsquare(black,display_width//2,display_height-300,500,300)
         if bufferstate!="":
             pointer(red,display_width-200,50,5)
         if lastturn!=turn:
@@ -460,7 +460,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
             ttextRect=ttext.get_rect()
             tanswerRect=tanswerx.get_rect()
             ttextRect.center = (display_width // 2, 50 )
-            tanswerRect.center= (display_width-250, display_height-150)
+            tanswerRect.center= (display_width/2+240, display_height-150)
             gameDisplay.blit(ttext,ttextRect)
             if thunderq and thunderqcounter==1:
                 gameDisplay.blit(tanswerx,tanswerRect)
