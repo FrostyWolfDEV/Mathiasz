@@ -100,15 +100,19 @@ def drawer(places,colors):
         pointer(colors[counter],x,y,10)
 def getquestion(usedszam):  #                            ##Question chooser##
     kerdesek=open("questions.txt","r",encoding="UTF-8" )
+    print(usedszam)
     for i in range(usedszam):
         linex=kerdesek.readline()
     if usedszam==0:
         usedszam+=1
         linex=kerdesek.readline()
     answerslist=[]
+    if "<End>" in linex:
+        usedszam=0
+        return getquestion(usedszam)
     if "<Q>" in linex:
         linex=list(linex)
-        print(linex)
+        #print(linex)
         for i in range(3):
             linex.pop(0)
         
@@ -119,9 +123,11 @@ def getquestion(usedszam):  #                            ##Question chooser##
             usedszam+=1
     usedszam+=1 # Correction for distortion
     returnlist=["".join(linex)[:-1],usedszam,answerslist]
+    
     return returnlist
              
 def getcorrectanswer(answers):
+    print(answers)
     for i in range(len(answers)):
 
         if list(answers[i])[0]=="R":
@@ -162,6 +168,9 @@ def getthunderq(tquestioncounter):
     line=questions.readline()
     question=""
     answer=""
+    if "<End>" in line:
+        tquestioncounter=0
+        return getthunderq(tquestioncounter)
     if "<Q>" in line:
         for i in range(3):
             line[-1:]
@@ -256,11 +265,16 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
                         usedszam=questionreturn[1]
                         question=questionreturn[0]
                         answers=questionreturn[2]
+                        
                         turn+=1
                         answerswitch=1
                     elif answerswitch==1:
                         answerswitch=0
-                        goodanswer=getcorrectanswer(answers) 
+                        if answers!=None:
+                            goodanswer=getcorrectanswer(answers) 
+                        else:
+                            usedszam=0
+                            goodanswer=getcorrectanswer(answers)
                     
 
 
@@ -367,7 +381,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         for listas in places:
             citiesDict[citynames[index2]]=City(citynames[index2],listas,colors[index2])
             index2+=1
-        print(citiesDict)
+        #print(citiesDict)
         
             
             
@@ -377,8 +391,8 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
         #print(citynames[1],citynames[0])
                 
 
-        print(buffer)
-        print(bufferstate)
+        #print(buffer)
+        #print(bufferstate)
         imgplace(Bground,0,0)  # Background        If you put anything onto the screen, do it from UNDER here(!!!!) (idiot)
         
         pointer(black,x,y,5)
@@ -427,7 +441,7 @@ def game_loop(): # Main loop #################################### MAIN GAME FROM
             pointer(red,display_width-200,50,5)
         if lastturn!=turn:
             lastturn=turn
-            if teamturn<3:
+            if teamturn<2:
                 teamturn+=1
             else:
                 teamturn=0
@@ -467,7 +481,7 @@ Körjelző            Done
 Indőmérő(?)          X
 Color change        Done
 Expand               X
-Ways(or borders)    1/2
+Ways(or borders)    Done
 Answers             Done
 
 Városok: 
@@ -485,6 +499,6 @@ Tihany
 Zánka
 Szigliget 
 Kesztely
-
+Boldizsár 2023.02.27. 0:21 "Nyisd mér kia... , Mi a faszom.. A... Nyisd már ki!"
 """
 quit()

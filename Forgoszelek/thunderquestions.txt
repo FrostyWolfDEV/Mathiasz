@@ -28,3 +28,4 @@
 <A>41
 <Q>Hány halálos áldozata volt a 1924. június 13.-ai Váci tornádónak?
 <A>9
+<End>

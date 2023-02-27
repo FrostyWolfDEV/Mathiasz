@@ -99,7 +99,7 @@ WKozmikus sugárzás
 R63 méter
 W72 méter
 W49 méter
-<Q>4Melyik országban mérték a valaha volt legmagasabb hűmérsékletet? 27
+<Q>4Melyik országban mérték a valaha volt legmagasabb hűmérsékletet? 
 WQatar
 WMexikó
 REgyesült államok
@@ -113,7 +113,7 @@ W7.8
 R9.5
 W8.9
 W10
-<Q>3A világ energia allátásának hány százalékáért felelős a nukleáris energia?
+<Q>4A világ energia allátásának hány százalékáért felelős a nukleáris energia?
 R10.3%
 W13.8%
 W3.6%
