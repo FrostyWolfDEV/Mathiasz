@@ -18,9 +18,11 @@ red = (255,0,0)
 blue=(0,0,255)
 green=(0,255,0)
 font = pygame.font.SysFont('timesnewroman',  30)
+font2 =pygame.font.SysFont("font.ttf",30)
 pygame.mixer.init()
 difficulty=1    # Set Difficulty
-
+def drawtoscreen(text,textRect):
+    gameDisplay.blit(text,textRect)
 
 def game_loop():
     letters=["Alpha","Beta","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu"]
@@ -77,11 +79,15 @@ def game_loop():
                         user_text="Correct"
                     else:
                         user_text="Incorrect"
-        gameDisplay.fill((255, 255, 255))
+        gameDisplay.fill(black)
         text=font.render(user_text, True, red, None)
+        title=font2.render("Militray Radio",True,green,None)
         text_rect=text.get_rect()
+        title_rect=title.get_rect()
+        title_rect.center=(display_width//2,100)
         text_rect.center=(display_width//2,display_height//2)
-        gameDisplay.blit(text,text_rect)
+        drawtoscreen(text,text_rect)
+        drawtoscreen(title,title_rect)
         
 
 
