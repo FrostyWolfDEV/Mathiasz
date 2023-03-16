@@ -17,13 +17,18 @@ white = (255,255,255)
 red = (255,0,0)
 blue=(0,0,255)
 green=(0,255,0)
+darkgreen=(30, 117, 19)
 font = pygame.font.SysFont('timesnewroman',  30)
 font2 =pygame.font.SysFont("font.ttf",30)
 pygame.mixer.init()
 difficulty=1    # Set Difficulty
 def drawtoscreen(text,textRect):
     gameDisplay.blit(text,textRect)
-
+def TextToScreen(font,text,color,x,y):
+    textx=font.render(text,True,color,None)
+    textRectx=textx.get_rect()
+    textRectx.center=(x,y)
+    drawtoscreen(textx,textRectx)
 def game_loop():
     letters=["Alpha","Beta","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu"]
     numbers=["One","Two","Three","Four","Five","Six","Seven","Eight","Niner","Zero"]
@@ -41,7 +46,7 @@ def game_loop():
                 engine.stop()
                 print("Quit with event(quit)!")
             if event.type== pygame.KEYDOWN:
-                if event.key==pygame.K_p:    # Start readout
+                if event.key==pygame.K_RSHIFT:    # Start readout
                     for i in range(random.randint(1+difficulty,4+difficulty+random.randint(0,2))):
                         coin=random.randint(0,1)
                         if coin==1:
@@ -50,7 +55,7 @@ def game_loop():
                         else:
                             say+=" "
                             say+=numbers[random.randint(0,len(numbers)-1)]
-                    
+                    user_text=""
                     engine.save_to_file(say,"say.mp3")
                     engine.runAndWait()
                     previus=say
@@ -81,21 +86,22 @@ def game_loop():
                         user_text="Incorrect"
         gameDisplay.fill(black)
         text=font.render(user_text, True, red, None)
-        title=font2.render("Militray Radio",True,green,None)
+        title=font2.render("Militray Radio",True,darkgreen,None)
         text_rect=text.get_rect()
         title_rect=title.get_rect()
         title_rect.center=(display_width//2,100)
         text_rect.center=(display_width//2,display_height//2)
         drawtoscreen(text,text_rect)
         drawtoscreen(title,title_rect)
-        
+        TextToScreen(font2,"This software if for official military use only! Any personal use of this software is considered a federal crime!",darkgreen,display_width//2,display_height-30)
 
 
         pygame.display.update()
         clock.tick(60)
 """
  TODO:
-    Numbers couse Error      (IP)
+    Numbers couse Error      (Done)
+    Better Looking Display   (IP)
 
 
 
