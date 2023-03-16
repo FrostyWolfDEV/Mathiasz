@@ -1,7 +1,9 @@
 import pygame
+from pygame.locals import *
 import random
 import time
-import threading   
+import threading
+import os   
 pygame.init
 import pyttsx3
 engine = pyttsx3.init()
@@ -19,7 +21,8 @@ blue=(0,0,255)
 green=(0,255,0)
 darkgreen=(30, 117, 19)
 font = pygame.font.SysFont('timesnewroman',  30)
-font2 =pygame.font.SysFont("font.ttf",30)
+
+font2 =pygame.font.Font("font.ttf",22)
 pygame.mixer.init()
 difficulty=1    # Set Difficulty
 def drawtoscreen(text,textRect):
@@ -29,6 +32,22 @@ def TextToScreen(font,text,color,x,y):
     textRectx=textx.get_rect()
     textRectx.center=(x,y)
     drawtoscreen(textx,textRectx)
+def ClickBox(x,y,width,height,border=list): # border=[True/False , color]
+    #print(x,y,width,height,border)
+    if border[0]==True:
+        pygame.draw.aalines(gameDisplay,border[1],True,[(x,y),(x+width,y)])
+        pygame.draw.aalines(gameDisplay,border[1],True,[(x,y),(x,y+height)])
+        pygame.draw.aalines(gameDisplay,border[1],True,[(x,y+height),(x+width,y+height)])
+        pygame.draw.aalines(gameDisplay,border[1],True,[(x+width,y+height),(x+width,y)])
+    
+        if pygame.mouse.get_pos()[0]>x and pygame.mouse.get_pos()[0]<x+width and pygame.mouse.get_pos()[1]>y and pygame.mouse.get_pos()[1]<y+height and pygame.mouse.get_pressed(num_buttons=3)[0]==True:
+            return True
+        else:
+            return False
+            
+
+
+
 def game_loop():
     letters=["Alpha","Beta","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu"]
     numbers=["One","Two","Three","Four","Five","Six","Seven","Eight","Niner","Zero"]
@@ -46,7 +65,7 @@ def game_loop():
                 engine.stop()
                 print("Quit with event(quit)!")
             if event.type== pygame.KEYDOWN:
-                if event.key==pygame.K_RSHIFT:    # Start readout
+                if event.key==pygame.K_RSHIFT:    #  Start readout
                     for i in range(random.randint(1+difficulty,4+difficulty+random.randint(0,2))):
                         coin=random.randint(0,1)
                         if coin==1:
@@ -62,13 +81,18 @@ def game_loop():
                     say=""
                     saymp3=pygame.mixer.Sound(file="say.mp3")
                     pygame.mixer.Sound.play(saymp3,loops=0)
+                if event.key==pygame.K_RCTRL:   # Debug event
+                    user_text= pygame.mouse.get_pressed(num_buttons=3)[0]
                 if event.key==pygame.K_BACKSPACE:
                     try:
                         user_text=user_text[:-1]
                     except:
                         print("Backspace on empty string")
                 elif event.key!=pygame.K_RETURN:
-                    user_text+=event.unicode
+                    try:
+                        user_text+=event.unicode
+                    except:
+                        print("Non unicode character")
                 elif event.key==pygame.K_RETURN:
                     print(previus)
                     userlist=list(user_text)
@@ -85,16 +109,19 @@ def game_loop():
                     else:
                         user_text="Incorrect"
         gameDisplay.fill(black)
-        text=font.render(user_text, True, red, None)
+        text=font.render(str(user_text), True, red, None)
         title=font2.render("Militray Radio",True,darkgreen,None)
         text_rect=text.get_rect()
         title_rect=title.get_rect()
-        title_rect.center=(display_width//2,100)
+        title_rect.center=(display_width//2,60)
         text_rect.center=(display_width//2,display_height//2)
         drawtoscreen(text,text_rect)
         drawtoscreen(title,title_rect)
         TextToScreen(font2,"This software if for official military use only! Any personal use of this software is considered a federal crime!",darkgreen,display_width//2,display_height-30)
-
+        Click=ClickBox(300,display_height//2,200,50,[True,red])
+        print(Click)
+        if Click:
+            user_text="Clicked"
 
         pygame.display.update()
         clock.tick(60)
