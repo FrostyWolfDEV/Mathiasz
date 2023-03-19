@@ -5,7 +5,7 @@ import time
 import threading
 import os   
 pygame.init
-import pyttsx3
+import pyttsx3 # Text to Speech 
 engine = pyttsx3.init()
 engine.setProperty("rate",100)
 pygame.font.init()
@@ -21,7 +21,9 @@ blue=(0,0,255)
 green=(0,255,0)
 darkgreen=(30, 117, 19)
 font = pygame.font.SysFont('timesnewroman',  30)
-
+activefile=0
+generalID=""
+targetAddres=""
 font2 =pygame.font.Font("font.ttf",22)
 pygame.mixer.init()
 difficulty=1    # Set Difficulty
@@ -32,21 +34,18 @@ def TextToScreen(font,text,color,x,y):
     textRectx=textx.get_rect()
     textRectx.center=(x,y)
     drawtoscreen(textx,textRectx)
-def ClickBox(x,y,width,height,border=list): # border=[True/False , color]
+def ClickBox(x,y,width,height,border): # border=[True/False , color]
     #print(x,y,width,height,border)
     if border[0]==True:
         pygame.draw.aalines(gameDisplay,border[1],True,[(x,y),(x+width,y)])
         pygame.draw.aalines(gameDisplay,border[1],True,[(x,y),(x,y+height)])
         pygame.draw.aalines(gameDisplay,border[1],True,[(x,y+height),(x+width,y+height)])
         pygame.draw.aalines(gameDisplay,border[1],True,[(x+width,y+height),(x+width,y)])
-    
         if pygame.mouse.get_pos()[0]>x and pygame.mouse.get_pos()[0]<x+width and pygame.mouse.get_pos()[1]>y and pygame.mouse.get_pos()[1]<y+height and pygame.mouse.get_pressed(num_buttons=3)[0]==True:
             return True
         else:
             return False
             
-
-
 
 def game_loop():
     letters=["Alpha","Beta","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliett","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu"]
@@ -57,7 +56,9 @@ def game_loop():
     game_exit=False
     user_text=""
     previus=""
-    
+    generalID=""
+    targetAddres=""
+    massage=""
     while not game_exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  
@@ -85,12 +86,22 @@ def game_loop():
                     user_text= pygame.mouse.get_pressed(num_buttons=3)[0]
                 if event.key==pygame.K_BACKSPACE:
                     try:
-                        user_text=user_text[:-1]
+                        if activefile==0:
+                            generalID=generalID[:-1]
+                        elif activefile==1:
+                            targetAddres=targetAddres[:-1]
+                        elif activefile==2:
+                            massage=massage[:-1]
                     except:
                         print("Backspace on empty string")
                 elif event.key!=pygame.K_RETURN:
                     try:
-                        user_text+=event.unicode
+                        if activefile==0:
+                            generalID+=event.unicode
+                        elif activefile==1:
+                            targetAddres+=event.unicode
+                        elif activefile==2:
+                            massage+=event.unicode
                     except:
                         print("Non unicode character")
                 elif event.key==pygame.K_RETURN:
@@ -117,12 +128,25 @@ def game_loop():
         text_rect.center=(display_width//2,display_height//2)
         drawtoscreen(text,text_rect)
         drawtoscreen(title,title_rect)
+        TextToScreen(font2,"Universal ID",darkgreen,200,display_height//2-40)
+        TextToScreen(font2,"Target Address",darkgreen,500,display_height//2-40)
+        TextToScreen(font2,"Massage",darkgreen,950,display_height//2-40)
         TextToScreen(font2,"This software if for official military use only! Any personal use of this software is considered a federal crime!",darkgreen,display_width//2,display_height-30)
-        Click=ClickBox(300,display_height//2,200,50,[True,red])
+        Click=ClickBox(100,display_height//2,200,50,[True,red])
+        targetClick=ClickBox(400,display_height//2,200,50,[True,red])
+        massageClick=ClickBox(700,display_height//2,500,50,[True,red])
         print(Click)
         if Click:
-            user_text="Clicked"
+            activefile=0
+            
+        TextToScreen(font2,generalID,darkgreen,400,display_height//2+25)
+        if targetClick:
+            activefile=1
 
+        if massageClick:
+            activefile=2
+        TextToScreen(font2,massage,darkgreen,950,display_height//2+25)
+        TextToScreen(font2,targetAddres,darkgreen,700,display_height//2+25)
         pygame.display.update()
         clock.tick(60)
 """
