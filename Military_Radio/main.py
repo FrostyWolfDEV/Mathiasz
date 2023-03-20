@@ -7,7 +7,7 @@ import os
 pygame.init
 import pyttsx3 # Text to Speech 
 engine = pyttsx3.init()
-engine.setProperty("rate",100)
+engine.setProperty("rate",120)
 pygame.font.init()
 display_width = 1600
 display_height = 900
@@ -62,6 +62,7 @@ def game_loop():
     massage=""
     UIDSAY=""
     TRGSAY=""
+    response=""
     while not game_exit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  
@@ -98,10 +99,11 @@ def game_loop():
                     previus=say
                     previusTRG=TRGSAY
                     previusUID=UIDSAY
-                    TRGSAY= "Target:" + TRGSAY
-                    UIDSAY=" Universal I D:" + UIDSAY
-                    say="Message:"+ say
-                    unifiedsay=UIDSAY+" "+ TRGSAY+" "+ say
+                    TRGSAY= "Target: " + TRGSAY
+                    UIDSAY=" Universal I D: " + UIDSAY
+                    say="Message: "+ say
+                    unifiedsay=UIDSAY+": "+ TRGSAY+": "+ say
+                    print(unifiedsay)
                     engine.save_to_file(unifiedsay,"say.mp3")
                     engine.runAndWait()
                     
@@ -121,6 +123,8 @@ def game_loop():
                             targetAddres=targetAddres[:-1]
                         elif activefile==2:
                             massage=massage[:-1]
+                        elif activefile==3:
+                            response=response[:-1]
                     except:
                         print("Backspace on empty string")
                 elif event.key!=pygame.K_RETURN:
@@ -131,6 +135,8 @@ def game_loop():
                             targetAddres+=event.unicode
                         elif activefile==2:
                             massage+=event.unicode
+                        elif activefile==3:
+                            response+=event.unicode
                     except:
                         print("Non unicode character")
                 elif event.key==pygame.K_RETURN:
@@ -164,16 +170,20 @@ def game_loop():
         Click=ClickBox(100,display_height//2,200,50,[True,red])
         targetClick=ClickBox(400,display_height//2,200,50,[True,red])
         massageClick=ClickBox(700,display_height//2,500,50,[True,red])
+        responseClick=ClickBox(display_width//2-250,display_height//2+200,500,50,[True,red])
         
-        if Click:
+        if Click: # Click detectors
             activefile=0
-            
         TextToScreen(font2,generalID,darkgreen,200,display_height//2+25)
         if targetClick:
             activefile=1
-
         if massageClick:
             activefile=2
+        if responseClick:
+            activefile=3
+        TextToScreen(font2,"Response",darkgreen,display_width//2,display_height//2+150)
+        TextToScreen(font2,response,darkgreen,display_width//2,display_height//2+225)
+
         TextToScreen(font2,massage,darkgreen,950,display_height//2+25)
         TextToScreen(font2,targetAddres,darkgreen,500,display_height//2+25)
         Drawline([0,display_height-50],[display_width,display_height-50],darkgreen)
